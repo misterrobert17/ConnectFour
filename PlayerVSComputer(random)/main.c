@@ -72,7 +72,8 @@ void ComRound()
     int Down = 0;
     while (1)
     {
-        scanf("%d", &DY);
+        srand(time(0));
+        DY = rand() % 7 + 1;
         if (DY > 7 || DY < 1)
         {
             printf("Wrong Number,Please enter again\n");
