@@ -3,8 +3,9 @@
 #include <math.h>
 #include <time.h>
 #include "windetermine.h"
-// 四子棋 版本: V1.1
+// 四子棋 版本: V1.2
 // V1.1 修正連號問題
+// V1.2 分割檔案
 
 int DX, DY;
 int Plate[6][7] = {0}; // 1 = red 2 = yellow
