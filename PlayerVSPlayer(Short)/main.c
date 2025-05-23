@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
-
+#include "windetermine.h"
 // 四子棋 版本: V1.1
 // V1.1 修正連號問題
 
@@ -10,156 +10,10 @@ int DX, DY;
 int Plate[6][7] = {0}; // 1 = red 2 = yellow
 char Turn;
 
-int Wingamedecide(int Round)
-{
-    int Num = 0;
-    if (Round < 4)
-    {
-        return 0;
-    }
-    for (int i = DX; i < 6; i++)
-    {
-        if (Plate[i][DY] == Plate[DX][DY])
-        {
-            Num++;
-        }
-        else
-        {
-            Num = 0;
-        }
-        // printf("high%d\n", Num);
-        if (Num == 4)
-        {
-            return 4;
-        }
-    }
-    Num = 0;
-    for (int i = DX; i >= 0; i--)
-    {
-        if (Plate[i][DY] == Plate[DX][DY])
-        {
-            Num++;
-        }
-        else
-        {
-            Num = 0;
-        }
-        // printf("Low%d\n", Num);
-        if (Num == 4)
-        {
-            return 4;
-        }
-    }
-    Num = 0;
-    for (int i = DY; i < 7; i++)
-    {
-        if (Plate[DX][i] == Plate[DX][DY])
-        {
-            Num++;
-        }
-        else
-        {
-            Num = 0;
-        }
-        // printf("Right%d\n", Num);
-        if (Num == 4)
-        {
-            return 4;
-        }
-    }
-    Num = 0;
-    for (int i = DY; i >= 0; i--)
-    {
-        if (Plate[DX][i] == Plate[DX][DY])
-        {
-            Num++;
-        }
-        else
-        {
-            Num = 0;
-        }
-        // printf("Left%d\n", Num);
-        if (Num == 4)
-        {
-            return 4;
-        }
-    }
-    Num = 0;
-    for (int i = DX, j = DY; i < 6 && j < 7; i++, j++)
-    {
-        if (Plate[i][j] == Plate[DX][DY])
-        {
-            Num++;
-        }
-        else
-        {
-            Num = 0;
-        }
-        // printf("Rightup%d\n", Num);
-        if (Num == 4)
-        {
-            return 4;
-        }
-    }
-    Num = 0;
-    for (int i = DX, j = DY; i >= 0 && j >= 0; i--, j--)
-    {
-        if (Plate[i][j] == Plate[DX][DY])
-        {
-            Num++;
-        }
-        else
-        {
-            Num = 0;
-        }
-        // printf("Leftdown%d\n", Num);
-        if (Num == 4)
-        {
-            return 4;
-        }
-    }
-    Num = 0;
-    for (int i = DX, j = DY; i >= 0 && j >= 0; i++, j--)
-    {
-        if (Plate[i][j] == Plate[DX][DY])
-        {
-            Num++;
-        }
-        else
-        {
-            Num = 0;
-        }
-        // printf("leftup%d\n", Num);
-        if (Num == 4)
-        {
-            return 4;
-        }
-    }
-    Num = 0;
-    for (int i = DX, j = DY; i >= 0 && j >= 0; i--, j++)
-    {
-        if (Plate[i][j] == Plate[DX][DY])
-        {
-            Num++;
-        }
-        else
-        {
-            Num = 0;
-        }
-        // printf("rightdown%d\n", Num);
-        if (Num == 4)
-        {
-            return 4;
-        }
-    }
-    Num = 0;
-    return 0;
-}
-
 int Wingamemsg(int Round)
 {
     int Num = 0;
-    Num = Wingamedecide(Round);
+    Num = Wingamedecide(Round, DX, DY, Plate);
     if (Round < 4)
     {
         return 1;
