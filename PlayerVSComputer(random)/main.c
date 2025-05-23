@@ -3,7 +3,7 @@
 #include <math.h>
 #include <time.h>
 #include "windetermine.h"
-// 四子棋 版本: V1.3
+// 四子棋 版本: V2.3
 
 int DX, DY;
 int Plate[6][7] = {0}; // 1 = red 2 = yellow
