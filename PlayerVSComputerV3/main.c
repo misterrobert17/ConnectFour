@@ -2,7 +2,9 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include <string.h>
 #include "windetermine.h"
+#include "qlearning.h"
 // 四子棋 版本: V2.3
 
 int DX, DY;
@@ -71,32 +73,41 @@ void PlayerRound()
 void ComRound()
 {
     int Down = 0;
-    while (1)
+    int action;
+    double epsilon = 0.1; // 探索率
+    action = QLearningChooseAction(Plate, epsilon);
+    if (action == -1)
+        action = rand() % 7;
+    DY = action;
+    for (int i = 0; i < 6; i++)
     {
-        srand(time(0));
-        DY = rand() % 7 + 1;
-        if (DY > 7 || DY < 1)
+        if (Plate[i][DY] == 0)
         {
-            printf("Wrong Number,Please enter again\n");
-            continue;
-        }
-        DY--;
-        for (int i = 0; i < 6; i++)
-        {
-            if (Plate[i][DY] == 0)
-            {
-                Down = 1;
-                Plate[i][DY] = 2;
-                DX = i;
-                break;
-            }
-        }
-        if (Down == 1)
-        {
+            Down = 1;
+            Plate[i][DY] = 2;
+            DX = i;
             break;
         }
-        continue;
     }
+    // Q-learning 更新
+    // 這裡簡單設 reward: 4連線+10, 平手+5, 其他0
+    int done = 0, reward = 0;
+    int result = Wingamedecide(0, DX, DY, Plate);
+    if (result == 4)
+    {
+        reward = 10;
+        done = 1;
+    }
+    else if (result == 5)
+    {
+        reward = 5;
+        done = 1;
+    }
+    int nextPlate[6][7];
+    memcpy(nextPlate, Plate, sizeof(nextPlate));
+    QLearningUpdate(Plate, action, reward, nextPlate, done);
+    if (done)
+        SaveQTable();
 }
 
 void PrintBoard()
@@ -116,6 +127,7 @@ void PrintBoard()
 int main()
 {
     srand(time(0));
+    LoadQTable();
     int Dice = rand() % 6 + 1, Round = 0;
     printf("DICE: %d\ndouble FirstPlayer First, or other First。Please enter 1~7\n", Dice);
     if (Dice % 2 == 0)
@@ -158,6 +170,6 @@ int main()
             Round++;
         }
     }
-
+    SaveQTable();
     return 0;
 }
