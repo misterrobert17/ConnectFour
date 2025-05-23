@@ -8,6 +8,18 @@ int Wingamedecide(int Round, int DX, int DY, int Plate[6][7])
     {
         return 0;
     }
+    for (int i = 0; i < 7; i++)
+    {
+        if (Plate[5][i] != 0)
+        {
+            Num++;
+        }
+        if (Num == 7)
+        {
+            return 5;
+        }
+    }
+    Num = 0;
     for (int i = DX; i < 6; i++)
     {
         if (Plate[i][DY] == Plate[DX][DY])

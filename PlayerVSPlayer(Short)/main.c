@@ -32,6 +32,10 @@ int Wingamemsg(int Round)
         }
         return 0;
     }
+    if (Num == 5)
+    {
+        printf("Pair");
+    }
     return 1;
 }
 
