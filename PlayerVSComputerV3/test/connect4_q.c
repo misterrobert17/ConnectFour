@@ -6,7 +6,7 @@
 
 #define ROWS 6
 #define COLS 7
-#define TRAIN_GAMES 1000
+#define TRAIN_GAMES 100000
 
 #define PLAYER1 1
 #define PLAYER2 2
