@@ -4,7 +4,7 @@
 #include <time.h>
 #include <string.h>
 #include "windetermine.h"
-#include "qlearning.h"
+
 // 四子棋 版本: V2.3
 
 int DX, DY;
